@@ -1,136 +1,163 @@
-import gspread
-from google.oauth2.service_account import Credentials
-
-SCOPE = [
-    "https://www.googleapis.com/auth/spreadsheets",
-    "https://www.googleapis.com/auth/drive.file",
-    "https://www.googleapis.com/auth/drive"
-    ]
-
-CREDS = Credentials.from_service_account_file('creds.json')
-SCOPED_CREDS = CREDS.with_scopes(SCOPE)
-GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
-SHEET = GSPREAD_CLIENT.open('love_sandwiches')
+import random
+from colorama import Fore, init
 
 
-def get_sales_data():
+# Initialize colorama
+init(autoreset=True)
+
+
+BANNER = '''
+ #####    ##   ##### ##### #      ######  ####  #    # # #####   ####     
+ #    #  #  #    #     #   #      #      #      #    # # #    # #         
+ #####  #    #   #     #   #      #####   ####  ###### # #    #  ####     
+ #    # ######   #     #   #      #           # #    # # #####       #    
+ #    # #    #   #     #   #      #      #    # #    # # #      #    #    
+ #####  #    #   #     #   ###### ######  ####  #    # # #       ####      
+'''
+
+
+def draw_field(field):
     """
-    Get sales figures input from the user.
-    Run a while loop to collect a valid string of data from the user
-    via the terminal, which must be a string of 6 numbers separated
-    by commas. The loop will repeatedly request data, until it is valid.
+    Draw the game board using the provided 2D list.
+    """
+    for row in field:
+        for cell in row:
+            if cell == '@':
+                print(Fore.GREEN + cell, end=' ')
+            elif cell == 'X':
+                print(Fore.RED + cell, end=' ')
+            elif cell == '-':
+                print(Fore.WHITE + cell, end=' ')
+            elif cell == '£':
+                print(Fore.BLUE + cell, end=' ')
+            elif cell == '$':
+                print(Fore.YELLOW + cell, end=' ')
+            else:
+                print(Fore.CYAN + cell, end=' ')
+        print()
+    print()
+
+
+def place_ships(board, symbol):
+    """
+    Randomly place 4 ships on the given board.
+    Ships are marked using the provided symbol.
+    """
+    ships = set()
+    while len(ships) < 4:
+        row = random.randint(0, 4)
+        col = random.randint(0, 4)
+        if (row, col) not in ships:
+            ships.add((row, col))
+            board[row][col] = symbol
+
+
+def get_valid_name():
+    """
+    Prompt the user for a name containing only letters.
     """
     while True:
-        print("Please enter sales data from the last market.")
-        print("Data should be six numbers, separated by commas.")
-        print("Example: 10,20,30,40,50,60\n")
-
-        data_str = input("Enter your data here:\n")
-
-        sales_data = data_str.split(",")
-
-        if validate_data(sales_data):
-            print("Data is valid!")
-            break
-
-    return sales_data
+        name = input(Fore.GREEN + 'Enter your name: ')
+        if name.isalpha():
+            return name
+        print(Fore.RED + 'Name must contain only letters. Please try again.')
 
 
-def validate_data(values):
+def get_valid_guess(guessed):
     """
-    Inside the try, converts all string values into integers.
-    Raises ValueError if strings cannot be converted into int,
-    or if there aren't exactly 6 values.
+    Prompt for a row and column guess, ensure integers 0-4 and not guessed before.
     """
-    try:
-        [int(value) for value in values]
-        if len(values) != 6:
-            raise ValueError(
-                f"Exactly 6 values required, you provided {len(values)}"
-            )
-    except ValueError as e:
-        print(f"Invalid data: {e}, please try again.\n")
-        return False
-
-    return True
-
-
-def update_worksheet(data, worksheet):
-    """
-    Receives a list of integers to be inserted into a worksheet
-    Update the relevant worksheet with the data provided
-    """
-    print(f"Updating {worksheet} worksheet...\n")
-    worksheet_to_update = SHEET.worksheet(worksheet)
-    worksheet_to_update.append_row(data)
-    print(f"{worksheet} worksheet updated successfully\n")
+    while True:
+        try:
+            row = int(input('Guess a row (0-4): '))
+            col = int(input('Guess a column (0-4): '))
+            if not (0 <= row <= 4 and 0 <= col <= 4):
+                raise ValueError
+            if (row, col) in guessed:
+                print(Fore.RED + 'You\'ve already guessed that location. Choose another.')
+                continue
+            return row, col
+        except ValueError:
+            print(Fore.RED + 'Invalid input. Enter numbers between 0 and 4.')
 
 
-def calculate_surplus_data(sales_row):
-    """
-    Compare sales with stock and calculate the surplus for each item type.
+def run_game():
+    print('*' * 75)
+    print(BANNER)
+    print('Welcome to Ultimate BATTLESHIPS!')
+    print('Board size: 5x5, Ships per side: 4, Turns: 5')
+    print('*' * 75)
 
-    The surplus is defined as the sales figure subtracted from the stock:
-    - Positive surplus indicates waste
-    - Negative surplus indicates extra made when stock was sold out.
-    """
-    print("Calculating surplus data...\n")
-    stock = SHEET.worksheet("stock").get_all_values()
-    stock_row = stock[-1]
-    
-    surplus_data = []
-    for stock, sales in zip(stock_row, sales_row):
-        surplus = int(stock) - sales
-        surplus_data.append(surplus)
+    name = get_valid_name()
+    player_score = 0
+    computer_score = 0
 
-    return surplus_data
+    player_board = [['-' for _ in range(5)] for _ in range(5)]
+    computer_board = [['-' for _ in range(5)] for _ in range(5)]
+    display_board = [['-' for _ in range(5)] for _ in range(5)]
 
+    place_ships(player_board, '@')
+    place_ships(computer_board, "'")
 
-def get_last_5_entries_sales():
-    """
-    Collects columns of data from sales worksheet, collecting
-    the last 5 entries for each sandwich and returns the data
-    as a list of lists.
-    """
-    sales = SHEET.worksheet("sales")
+    print(f"\n{name}'s Board:")
+    draw_field(player_board)
 
-    columns = []
-    for ind in range(1, 7):
-        column = sales.col_values(ind)
-        columns.append(column[-5:])
+    print("Computer's Board:")
+    draw_field(display_board)
 
-    return columns
+    player_guesses = set()
+    computer_guesses = set()
+    turns = 0
 
+    while turns < 5 and player_score < 4 and computer_score < 4:
+        row, col = get_valid_guess(player_guesses)
+        player_guesses.add((row, col))
+        turns += 1
 
-def calculate_stock_data(data):
-    """
-    Calculate the average stock for each item type, adding 10%
-    """
-    print("Calculating stock data...\n")
-    new_stock_data = []
+        if computer_board[row][col] == "'":
+            print(Fore.YELLOW + 'Hit! You sank an enemy ship!')
+            display_board[row][col] = '$'
+            player_score += 1
+        else:
+            print(Fore.RED + 'Miss!')
+            display_board[row][col] = 'X'
 
-    for column in data:
-        int_column = [int(num) for num in column]
-        average = sum(int_column) / len(int_column)
-        stock_num = average * 1.1
-        new_stock_data.append(round(stock_num))
+        draw_field(display_board)
 
-    return new_stock_data
+        while True:
+            r = random.randint(0, 4)
+            c = random.randint(0, 4)
+            if (r, c) not in computer_guesses:
+                computer_guesses.add((r, c))
+                break
+        print(f"Computer guesses: {(r, c)}")
+        if player_board[r][c] == '@':
+            print(Fore.BLUE + 'Computer hit your ship!')
+            player_board[r][c] = '£'
+            computer_score += 1
+        else:
+            print(Fore.WHITE + 'Computer missed.')
+
+        draw_field(player_board)
+        print(Fore.CYAN + f"Score -> {name}: {player_score} | Computer: {computer_score}")
+        print('-' * 50)
+
+    if player_score > computer_score:
+        print(Fore.GREEN + f"Congratulations {name}, you won!")
+    elif player_score < computer_score:
+        print(Fore.RED + f"Sorry {name}, you lost.")
+    else:
+        print(Fore.YELLOW + "It's a draw!")
 
 
 def main():
-    """
-    Run all program functions
-    """
-    data = get_sales_data()
-    sales_data = [int(num) for num in data]
-    update_worksheet(sales_data, "sales")
-    new_surplus_data = calculate_surplus_data(sales_data)
-    update_worksheet(new_surplus_data, "surplus")
-    sales_columns = get_last_5_entries_sales()
-    stock_data = calculate_stock_data(sales_columns)
-    update_worksheet(stock_data, "stock")
+    while True:
+        run_game()
+        replay = input(Fore.CYAN + 'Play again? (Y/N): ').strip().lower()
+        if replay != 'y':
+            print(Fore.MAGENTA + 'Thanks for playing Ultimate BATTLESHIPS!')
+            break
 
 
-print("Welcome to Love Sandwiches Data Automation")
-main()
+if __name__ == '__main__':
+    main()
