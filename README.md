@@ -1,10 +1,10 @@
 # Ultimate Battleships
 
-![Game Banner](assets/images/banner.png)
+![Game Banner](assets/images/introduction.png)
 
 **Ultimate Battleships** is a command‑line implementation of the classic Battleships game, written in pure Python. You face off against a computer opponent on a 5×5 grid, each side placing 4 ships and having up to 5 turns to sink the enemy fleet.
 
-> **Live demo:** _https://your‑heroku‑app.herokuapp.com_
+> **Live demo:** _https://mon-battleship-221b8a85dbc3.herokuapp.com/_
 
 ---
 
