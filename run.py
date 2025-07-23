@@ -1,20 +1,17 @@
 import random
 from colorama import Fore, init
 
-
-
 # Initialize colorama
 init(autoreset=True)
 
-
-BANNER = '''
- #####    ##   ##### ##### #      ######  ####  #    # # #####   ####     
- #    #  #  #    #     #   #      #      #      #    # # #    # #         
- #####  #    #   #     #   #      #####   ####  ###### # #    #  ####     
- #    # ######   #     #   #      #           # #    # # #####       #    
- #    # #    #   #     #   #      #      #    # #    # # #      #    #    
- #####  #    #   #     #   ###### ######  ####  #    # # #       ####      
-'''
+BANNER = """
+#####    ##   ##### ##### #      ######  ####  #    # # #####   ####
+ #    #  #  #    #     #   #      #      #      #    # # #    # #
+ #####  #    #   #     #   #      #####   ####  ###### # #    #  ####
+ #    # ######   #     #   #      #           # #    # # #####       #
+ #    # #    #   #     #   #      #      #    # #    # # #      #    #
+ #####  #    #   #     #   ###### ######  ####  #    # # #       ####
+"""
 
 
 def draw_field(field):
@@ -63,7 +60,8 @@ def get_valid_name():
 
 def get_valid_guess(guessed):
     """
-    Prompt for a row and column guess, ensure integers 0-4 and not guessed before.
+    Prompt for a row and column guess,
+    ensure integers 0-4 and not guessed before.
     """
     while True:
         try:
@@ -73,7 +71,10 @@ def get_valid_guess(guessed):
             if not (0 <= row <= 4 and 0 <= col <= 4):
                 raise ValueError
             if (row, col) in guessed:
-                print(Fore.RED + 'You\'ve already guessed that location. Choose another.')
+                print(
+                    Fore.RED
+                    + "You've already guessed that location. Choose another."
+                )
                 continue
             return row, col
         except ValueError:
@@ -138,7 +139,12 @@ def run_game():
             print(Fore.WHITE + 'Computer missed.')
 
         draw_field(player_board)
-        print(Fore.CYAN + f"Score -> {name}: {player_score} | Computer: {computer_score}")
+        # Ligne longue scindée en deux pour rester sous 79 caractères
+        score_message = (
+            f"Score -> {name}: {player_score} "
+            f"| Computer: {computer_score}"
+        )
+        print(Fore.CYAN + score_message)
         print('-' * 50)
 
     if player_score > computer_score:
