@@ -92,7 +92,6 @@ UltimateBattleships/
 │       ├── banner.png       # ASCII art banner  
 │       ├── mockup.png       # CLI gameplay screenshot  
 │       └── flowchart.png    # Game loop diagram  
-├── run.py                   # Main game script  
-├── battleships.py           # Helper functions (board init, ship placement)  
+├── run.py                   # Main game script   
 ├── requirements.txt         # Python dependencies  
 └── README.md                # Project documentation  
