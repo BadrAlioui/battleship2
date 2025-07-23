@@ -1,6 +1,6 @@
 import random
 from colorama import Fore, init
-import sys
+
 
 
 # Initialize colorama
@@ -54,16 +54,11 @@ def place_ships(board, symbol):
 
 
 def get_valid_name():
-    """
-    Prompt the user for a name containing only letters.
-    """
     while True:
-        sys.stdout.write('Enter your name: ')
-        sys.stdout.flush()
-        name = input()
+        name = input('Enter your name: ')
         if name.isalpha():
             return name
-        print(Fore.RED + 'Name must contain only letters. Please try again.')
+        print('Name must contain only letters. Please try again.')
 
 
 def get_valid_guess(guessed):
@@ -72,13 +67,8 @@ def get_valid_guess(guessed):
     """
     while True:
         try:
-            sys.stdout.write('Guess a row (0‑4): ')
-            sys.stdout.flush()
-            row = int(input())
-
-            sys.stdout.write('Guess a column (0‑4): ')
-            sys.stdout.flush()
-            col = int(input())
+            row = int(input('Guess a row (0-4): '))
+            col = int(input('Guess a column (0-4): '))
 
             if not (0 <= row <= 4 and 0 <= col <= 4):
                 raise ValueError
