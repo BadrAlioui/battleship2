@@ -1,45 +1,98 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# Ultimate Battleships
 
-Welcome,
+![Game Banner](assets/images/banner.png)
 
-This is the Code Institute student template for Gitpod. We have preinstalled all of the tools you need to get started. You can safely delete this README.md file, or change it for your own project. Please do read it at least once, though! It contains some important information about Gitpod and the extensions we use.
+**Ultimate Battleships** is a command‑line implementation of the classic Battleships game, written in pure Python. You face off against a computer opponent on a 5×5 grid, each side placing 4 ships and having up to 5 turns to sink the enemy fleet.
 
-## Gitpod Reminders
+> **Live demo:** _https://your‑heroku‑app.herokuapp.com_
 
-To run a frontend (HTML, CSS, Javascript only) application in Gitpod, in the terminal, type:
+---
 
-`python3 -m http.server`
+## Table of Contents
 
-A blue button should appear to click: *Make Public*,
+1. [Project Overview](#project-overview)  
+2. [Features](#features)  
+3. [Technology Stack](#technology-stack)  
+4. [Installation](#installation)  
+5. [Usage](#usage)  
+6. [Project Structure & Assets](#project-structure--assets)  
+7. [Testing & Validation](#testing--validation)  
+8. [Future Improvements](#future-improvements)  
+9. [Credits](#credits)  
 
-Another blue button should appear to click: *Open Browser*.
+---
 
-To run a backend Python file, type `python3 app.py`, if your Python file is named `app.py` of course.
+## Project Overview
 
-A blue button should appear to click: *Make Public*,
+Ultimate Battleships brings the naval combat experience to your terminal. It combines:
 
-Another blue button should appear to click: *Open Browser*.
+- **Interactive CLI** with clear prompts  
+- **Colorized output** (hits in yellow, misses in red, ships in green/blue)  
+- **Pure Python**—no web frameworks required for core gameplay  
 
-In Gitpod you have superuser security privileges by default. Therefore you do not need to use the `sudo` (superuser do) command in the bash terminal in any of the lessons.
+---
 
-## Updates Since The Instructional Video
+## Features
 
-We continually tweak and adjust this template to help give you the best experience. Here is the version history:
+- **5×5 game board**, 4 ships per side  
+- **5 turns** maximum to sink all ships  
+- **Colorized hits, misses, ships** via `colorama`  
+- **Replayability**: prompt to play again  
+- **Robust input validation** for rows/columns  
 
-**October 21 2020:** Versions of the HTMLHint, Prettier, Bootstrap4 CDN and Auto Close extensions updated. The Python extension needs to stay the same version for now.
+---
 
-**October 08 2020:** Additional large Gitpod files (`core.mongo*` and `core.python*`) are now hidden in the Explorer, and have been added to the `.gitignore` by default.
+## Technology Stack
 
-**September 22 2020:** Gitpod occasionally creates large `core.Microsoft` files. These are now hidden in the Explorer. A `.gitignore` file has been created to make sure these files will not be committed, along with other common files.
+- **Language**: Python 3.12+  
+- **Library**:  
+  - `colorama` 0.4.6 — terminal text coloring  
+- **Deployment (optional)**:  
+  - `Flask` + `gunicorn` for a web UI  
+- **Hosting**: Heroku  
 
-**April 16 2020:** The template now automatically installs MySQL instead of relying on the Gitpod MySQL image. The message about a Python linter not being installed has been dealt with, and the set-up files are now hidden in the Gitpod file explorer.
+---
 
-**April 13 2020:** Added the _Prettier_ code beautifier extension instead of the code formatter built-in to Gitpod.
+## Installation
 
-**February 2020:** The initialisation files now _do not_ auto-delete. They will remain in your project. You can safely ignore them. They just make sure that your workspace is configured correctly each time you open it. It will also prevent the Gitpod configuration popup from appearing.
+1. **Clone the repository**  
+   ```bash
+   git clone https://github.com/YourUsername/UltimateBattleships.git
+   cd UltimateBattleships
 
-**December 2019:** Added Eventyret's Bootstrap 4 extension. Type `!bscdn` in a HTML file to add the Bootstrap boilerplate. Check out the <a href="https://github.com/Eventyret/vscode-bcdn" target="_blank">README.md file at the official repo</a> for more options.
+---
 
---------
+### Create and activate a virtual environment
 
-Happy coding!
+```bash
+# Create & activate virtual environment
+python -m venv venv
+# Windows (PowerShell)
+.\venv\Scripts\Activate.ps1
+# macOS/Linux
+source venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run the game locally
+python run.py
+# • Enter your name when prompted  
+# • Guess row and column (0–4) each turn  
+# • Hits ($), misses (X) and ships (@/£) will be colorized  
+# • After 5 turns—or when all ships are sunk—the game ends and you can choose to replay
+
+# To play via Heroku’s CLI:
+heroku run python run.py
+
+# Project Structure & Assets
+UltimateBattleships/
+├── assets/  
+│   └── images/  
+│       ├── banner.png       # ASCII art banner  
+│       ├── mockup.png       # CLI gameplay screenshot  
+│       └── flowchart.png    # Game loop diagram  
+├── run.py                   # Main game script  
+├── battleships.py           # Helper functions (board init, ship placement)  
+├── requirements.txt         # Python dependencies  
+└── README.md                # Project documentation  
