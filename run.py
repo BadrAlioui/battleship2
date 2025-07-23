@@ -1,5 +1,6 @@
 import random
 from colorama import Fore, init
+import sys
 
 
 # Initialize colorama
@@ -57,7 +58,9 @@ def get_valid_name():
     Prompt the user for a name containing only letters.
     """
     while True:
-        name = input(Fore.GREEN + 'Enter your name: ')
+        sys.stdout.write('Enter your name: ')
+        sys.stdout.flush()
+        name = input()
         if name.isalpha():
             return name
         print(Fore.RED + 'Name must contain only letters. Please try again.')
@@ -69,9 +72,12 @@ def get_valid_guess(guessed):
     """
     while True:
         try:
-            print('Guess a row (0‑4):', end=' ', flush=True)
+            sys.stdout.write('Guess a row (0‑4): ')
+            sys.stdout.flush()
             row = int(input())
-            print('Guess a column (0‑4):', end=' ', flush=True)
+
+            sys.stdout.write('Guess a column (0‑4): ')
+            sys.stdout.flush()
             col = int(input())
 
             if not (0 <= row <= 4 and 0 <= col <= 4):
