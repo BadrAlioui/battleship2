@@ -66,8 +66,10 @@ def get_valid_guess(guessed):
     """
     while True:
         try:
-            row = int(input('Guess a row (0-4): '))
-            col = int(input('Guess a column (0-4): '))
+            print('Guess a row (0-4): ')
+            row = int(input())
+            print('Guess a column (0-4): ')
+            col = int(input())
 
             if not (0 <= row <= 4 and 0 <= col <= 4):
                 raise ValueError
