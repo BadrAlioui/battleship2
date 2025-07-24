@@ -52,7 +52,8 @@ def place_ships(board, symbol):
 
 def get_valid_name():
     while True:
-        name = input('Enter your name: ')
+        print('Enter your name: ')
+        name = input()        
         if name.isalpha():
             return name
         print('Name must contain only letters. Please try again.')
