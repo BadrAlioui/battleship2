@@ -177,6 +177,29 @@ Place your flowchart image in `assets/flowchart.png` and reference it below:
 | Turn limit enforcement   | Stops after five turns                          | after 5 shots         | Pass      |
 | Endgame scoring          | Displays correct win/lose/draw message          | various score states  | Pass      |
 
+## Bug Fixes
+
+- **Replay prompt wasn’t visible**  
+  The `"Play again?"` message didn’t show up when passed directly into `input()`. To fix this, I split it into a separate `print` call:
+
+  ```python
+  # Before
+  replay = input('Play again? (Y/N): ').strip().lower()
+
+  # After
+  print('Play again? (Y/N): ')
+  replay = input().strip().lower()
+
+
+## Known Issues & Future Improvements
+
+### Color output on Heroku
+Currently, colored text (via Colorama) only renders when you run:
+
+```bash
+heroku run python run.py
+
+
 ---
 
 ## Deployment
