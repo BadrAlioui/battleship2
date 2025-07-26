@@ -156,6 +156,10 @@ def run_game():
         print(Fore.RED + f"Sorry {name}, you lost.")
     else:
         print(Fore.YELLOW + "It's a draw!")
+    
+    # show computer’s ships
+    print("\nComputer’s ships were at:")
+    draw_field(computer_board)
 
 
 def main():
