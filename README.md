@@ -197,7 +197,7 @@ Currently, colored text (via Colorama) only renders when you run:
 
 ```bash
 heroku run python run.py
-
+```
 
 ---
 
