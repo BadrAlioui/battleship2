@@ -1,4 +1,18 @@
-# Ultimate Battleships
+## Table of Contents
+
+1. [User Experience (UX)](#user-experience-ux)
+2. [Project Goals](#project-goals)
+3. [User Stories](#user-stories)
+4. [Color Scheme](#color-scheme)
+5. [Game Mechanics](#game-mechanics)
+6. [Flowchart](#flowchart)
+7. [Features](#features)
+8. [Technologies Used](#technologies-used)
+9. [Testing](#testing)
+10. [Deployment](#deployment)
+11. [Credits & Acknowledgements](#credits--acknowledgements)
+
+---
 
 ![Game Banner](assets/images/introduction.png)
 
@@ -6,21 +20,7 @@
 
 > **Live demo:** _https://mon-battleship-221b8a85dbc3.herokuapp.com/_
 
----
 
-## Table of Contents
-
-1. [Project Overview](#project-overview)  
-2. [Features](#features)  
-3. [Technology Stack](#technology-stack)  
-4. [Installation](#installation)  
-5. [Usage](#usage)  
-6. [Project Structure & Assets](#project-structure--assets)  
-7. [Testing & Validation](#testing--validation)  
-8. [Future Improvements](#future-improvements)  
-9. [Credits](#credits)  
-
----
 
 ## Project Overview
 
@@ -32,143 +32,19 @@ Ultimate Battleships brings the naval combat experience to your terminal. It com
 
 ---
 
-## Features
+## User Experience (UX)
 
-- **5×5 game board**, 4 ships per side  
-- **5 turns** maximum to sink all ships  
-- **Colorized hits, misses, ships** via `colorama`  
-- **Replayability**: prompt to play again  
-- **Robust input validation** for rows/columns  
+* **Immersive CLI**: The game runs purely in the terminal, preserving the feel of a classic battleship match.
+* **Clear Feedback**: Hits, misses, and scores are displayed with colored text to guide the player.
+* **Replayability**: At the end, the player is prompted to play again or exit.
 
----
+## Project Goals
 
-## Technology Stack
+* Build a self-contained Python application that does not require any external servers or browsers.
+* Use only built-in `input()`/`print()` for I/O, enhanced by the `colorama` library for better readability.
+* Deploy the game to Heroku to demonstrate seamless terminal hosting.
 
-- **Language**: Python 3.12+  
-- **Library**:  
-  - `colorama` 0.4.6 — terminal text coloring  
-- **Deployment (optional)**:  
-  - `Flask` + `gunicorn` for a web UI  
-- **Hosting**: Heroku  
-
----
-
-## Installation
-
-1. **Clone the repository**  
-   ```bash
-   git clone https://github.com/YourUsername/UltimateBattleships.git
-   cd UltimateBattleships
-
----
-
-### Create and activate a virtual environment
-
-```bash
-# Create & activate virtual environment
-python -m venv venv
-# Windows (PowerShell)
-.\venv\Scripts\Activate.ps1
-# macOS/Linux
-source venv/bin/activate
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Run the game locally
-python run.py
-# • Enter your name when prompted  
-# • Guess row and column (0–4) each turn  
-# • Hits ($), misses (X) and ships (@/£) will be colorized  
-# • After 5 turns—or when all ships are sunk—the game ends and you can choose to replay
-
-# To play via Heroku’s CLI:
-heroku run python run.py
-
-# Project Structure & Assets
-UltimateBattleships/
-├── assets/  
-│   └── images/  
-│       ├── banner.png       # ASCII art banner  
-│       ├── mockup.png       # CLI gameplay screenshot  
-│       └── flowchart.png    # Game loop diagram  
-├── run.py                   # Main game script   
-├── requirements.txt         # Python dependencies  
-└── README.md                # Project documentation  
-
-# Ultimate Battleships
-
-Ultimate Battleships is a terminal-based Python game where you and the computer take turns firing at each other's fleet on a 5x5 grid. Each side has four ships, and the first to sink more ships within five turns wins.
-
-## Table of Contents
-
-* [Features](#features)
-* [Installation](#installation)
-* [Usage](#usage)
-* [Game Rules](#game-rules)
-* [Testing](#testing)
-* [Deployment](#deployment)
-
-## Features
-
-* Interactive command-line interface using `print` and `input`
-* Colored output for hits, misses, and feedback using **Colorama**
-* Persistent game state via cookies in the web version (Flask)
-
-## Installation
-
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/BadrAlioui/battleShip.git
-   cd battleShip
-   ```
-2. Create and activate a virtual environment:
-
-   ```bash
-   python -m venv venv
-   # Windows PowerShell
-   .\venv\Scripts\Activate.ps1
-   # Unix/Mac
-   source venv/bin/activate
-   ```
-3. Install dependencies:
-
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-## Usage
-
-* **Local play (CLI):**
-
-  ```bash
-  python run.py
-  ```
-* **Heroku:**
-
-  ```bash
-  heroku create my-battleship
-  git push heroku main
-  heroku open
-  ```
-
-## Game Rules
-
-* Board size: 5×5
-* Ships per side: 4
-* Turns: 5 per side
-* Symbols:
-
-  * `@`: player’s ship
-  * `'`: computer’s ship
-  * `$`: hit mark
-  * `X`: miss mark
-  * `£`: computer’s hit on player
-
-## Testing
-
-### Testing User Stories
+## User Stories
 
 **As a user, I want to receive information about the main objective of the program.**
 
@@ -191,90 +67,7 @@ Ultimate Battleships is a terminal-based Python game where you and the computer 
 
 * At game end, a clear win/lose/draw message appears in color.
 
-### Code Validation
-
-* All Python code was checked against PEP8 standards using an online validator.
-
-### Manual Testing
-
-| Feature                  | Outcome                                         | Example Input         | Pass/Fail |
-| ------------------------ | ----------------------------------------------- | --------------------- | --------- |
-| Name input validation    | Rejects empty or non-letter names               | `(empty)`             | Pass      |
-| Row/col validation       | Rejects non-integers and out-of-range values    | `5`, `-1`, `a`        | Pass      |
-| Duplicate guess handling | Prompts again if the same cell is guessed twice | same coordinates      | Pass      |
-| Hit detection            | Marks `$` and increments score on hit           | guessing a ship coord | Pass      |
-| Miss detection           | Marks `X` on miss                               | guessing empty cell   | Pass      |
-| Turn limit enforcement   | Stops after five turns                          | after 5 shots         | Pass      |
-| Endgame scoring          | Displays correct win/lose/draw message          | various score states  | Pass      |
-
-## Deployment
-
-This project can be deployed to Heroku:
-
-1. Ensure `requirements.txt` is up to date:
-
-   ```bash
-   pip freeze > requirements.txt
-   ```
-2. Add a `Procfile` containing:
-
-   ```Procfile
-   web: python run.py
-   ```
-3. Commit and push to your GitHub repo, then link and deploy on Heroku:
-
-   ```bash
-   heroku create your-app-name
-   git push heroku main
-   heroku open
-   ```
-
-# Ultimate Battleships
-
-> ![Game Mockup](assets/mockup.png)
-
-**Ultimate Battleships** is a terminal-style naval combat game where players have 5 turns to sink enemy ships hidden on a 5×5 grid. Inspired by the classic board game, the application uses Python’s `input()` and `print()` functions for an immersive, colorized experience in your console.
-
-[Play the live demo on Heroku](https://mon-battleship-221b8a85dbc3.herokuapp.com/)
-
----
-
-## Table of Contents
-
-1. [User Experience (UX)](#user-experience-ux)
-2. [Project Goals](#project-goals)
-3. [User Stories](#user-stories)
-4. [Color Scheme](#color-scheme)
-5. [Game Mechanics](#game-mechanics)
-6. [Flowchart](#flowchart)
-7. [Features](#features)
-8. [Technologies Used](#technologies-used)
-9. [Testing](#testing)
-10. [Deployment](#deployment)
-11. [Credits & Acknowledgements](#credits--acknowledgements)
-
----
-
-## User Experience (UX)
-
-* **Immersive CLI**: The game runs purely in the terminal, preserving the feel of a classic battleship match.
-* **Clear Feedback**: Hits, misses, and scores are displayed with colored text to guide the player.
-* **Replayability**: At the end, the player is prompted to play again or exit.
-
-## Project Goals
-
-* Build a self-contained Python application that does not require any external servers or browsers.
-* Use only built-in `input()`/`print()` for I/O, enhanced by the `colorama` library for better readability.
-* Deploy the game to Heroku to demonstrate seamless terminal hosting.
-
-## User Stories
-
-* As a player, I want to know how many turns I have left.
-* As a player, I want to see my score and the computer’s score at each step.
-* As a player, I want clear confirmation of hits and misses.
-* As a player, I want to replay or exit after the game ends.
-
-## Color Scheme
+## Color Scheme (with visual studio or git bash)
 
 | Element            | Color  |
 | ------------------ | ------ |
@@ -302,53 +95,155 @@ This project can be deployed to Heroku:
 
 Place your flowchart image in `assets/flowchart.png` and reference it below:
 
-![Game Flowchart](assets/flowchart.png)
+![Game Flowchart](assets/images/flotwart.png)
 
 ---
 
 ## Features
 
-* **Turn Counter**: Shows current turn and remaining turns.
-* **Scoreboard**: Displays both scores dynamically.
-* **Real-time Feedback**: Alerts for hits, misses, and computer actions.
-* **Session Persistence**: Uses browser cookies when run via Flask (optional deployment).
+### 🎮 Core Gameplay  
+- **5×5 Grid & 4 Ships**  
+  Each side (you and the computer) has a 5×5 board and places 4 ships at random.  
+- **Turn‑Based Combat**  
+  You have up to 5 turns to sink all enemy ships before the game ends.
+
+  ![feature](assets/images/features.png)
+
+### 🌈 Colorized Output (supported in Git Bash and VS Code terminals)
+- **Hits** (`$`) displayed in **yellow**  
+- **Misses** (`X`) displayed in **red**  
+- **Your ships** (`@`) displayed in **green**  
+- **Computer’s hits** (`£`) displayed in **blue**  
+- **Water** (`-`) displayed in **white**  
+  Powered by the [`colorama`](https://pypi.org/project/colorama/) library for clear, eye‑catching feedback.
+
+  ![hits](assets/images/hits.png)
+
+  ![hits with colors](assets/images/hitsWithColors.png)
+
+### ✅ Robust Input Validation  
+- Ensures **row** and **column** are integers between **0** and **4**.  
+- Rejects **duplicate guesses** and prompts again when invalid.
+
+![range](assets/images/range.png)
+
+### 📊 Score Tracking & Turn Counter  
+- Displays **current turn** (1–5) and **remaining turns** each round.  
+- Shows both **player** and **computer** scores live after each shot.
+
+![range](assets/images/score.png)
+
+### 🔁 Replayability  
+- At game end (win/lose/draw), you’re prompted to **play again** or **exit**.
+
+![playAgain](assets/images/play_again.png)
+ 
+
+---
 
 ## Technologies Used
 
-* **Language**: Python 3.13
-* **Libraries**: `colorama` for colored output
-* **Hosting**: [Heroku](https://www.heroku.com/) using a Node.js + `node-pty` bridge for terminal emulation
-* **Version Control**: Git & GitHub
+- **Language**: Python 3.13  
+  Chosen for its clear syntax, powerful standard library, and wide community support.
+
+- **Libraries**:  
+  - `colorama` 0.4.6 — provides cross‑platform ANSI color support for terminal output.
+
+- **Hosting**: Heroku  
+  Deployed as an interactive web‑terminal using a small Node.js server with `node-pty` to bridge between the browser’s xterm.js frontend and the Python backend.
+
+- **Version Control**: Git & GitHub  
+  Tracks all changes, enables collaboration, and powers automated deployments via Heroku’s Git integration.
+
+---
 
 ## Testing
 
-* Manual playtesting ensured correct hit/miss logic and turn count.
-* Input validation checks for out-of-range or repeated coordinates.
-* Tested on Windows PowerShell, Git Bash, and Heroku remote shells.
+### Code Validation
+
+* All Python code was checked against PEP8 standards using an online validator.
+
+![pep8](assets/images/pep8.png)
+
+### Manual Testing
+
+| Feature                  | Outcome                                         | Example Input         | Pass/Fail |
+| ------------------------ | ----------------------------------------------- | --------------------- | --------- |
+| Name input validation    | Rejects empty or non-letter names               | `(empty)`             | Pass      |
+| Row/col validation       | Rejects non-integers and out-of-range values    | `5`, `-1`, `a`        | Pass      |
+| Duplicate guess handling | Prompts again if the same cell is guessed twice | same coordinates      | Pass      |
+| Hit detection            | Marks `$` and increments score on hit           | guessing a ship coord | Pass      |
+| Miss detection           | Marks `X` on miss                               | guessing empty cell   | Pass      |
+| Turn limit enforcement   | Stops after five turns                          | after 5 shots         | Pass      |
+| Endgame scoring          | Displays correct win/lose/draw message          | various score states  | Pass      |
+
+---
 
 ## Deployment
 
-1. Clone the repo.
-2. Install requirements:
+Follow these steps to deploy **Ultimate Battleships** to Heroku:
 
-   ```bash
-   pip install -r requirements.txt
-   ```
-3. (Optional) If running in browser terminal: install Node.js deps:
+1. **Prepare your code**  
+   - Ensure your `requirements.txt` is up to date:  
+     ```bash
+     pip freeze > requirements.txt
+     ```  
+   - Commit all changes and push to your GitHub repository.
 
-   ```bash
-   npm install
-   ```
-4. Launch locally:
+2. **Create a new Heroku app**  
+   - Log in to the Heroku Dashboard and click **“Create new app”**.  
+   - Choose a unique **App name** (e.g. `ultimate‑battleships`) and your preferred region.  
+   - Click **Create app**.
 
-   ```bash
-   python run.py
-   ```
-5. Deploy to Heroku:
+3. **Configure buildpacks**  
+   - Under the **Settings** tab, find **Buildpacks** and click **Add buildpack**.  
+   - Add **heroku/python**.  
+   - Click **Add buildpack** again and add **heroku/nodejs**.  
+   - Ensure **python** is listed above **nodejs**.
 
-   ```bash
-   heroku create your-app-name
-   git push heroku main
-   ```
+4. **Set environment variables** (optional)  
+   - Still under **Settings**, click **Reveal Config Vars**.  
+   - If your game uses any credentials, add them here (e.g. `CREDS`, `API_KEY`).  
+   - By default, Heroku will provide a `PORT` variable—no need to set it manually.
 
+5. **Link your GitHub repo**  
+   - Switch to the **Deploy** tab.  
+   - Under **Deployment method**, choose **GitHub** and click **Connect to GitHub**.  
+   - Search for your repository (e.g. `YourUsername/UltimateBattleships`) and click **Connect**.
 
+6. **Deploy your app**  
+   - Choose **Enable Automatic Deploys** (optional) to deploy on every push to the `main` branch.  
+   - Or click **Deploy Branch** under **Manual deploy** to trigger the first release.  
+
+7. **Open your live game**  
+   - Once the build completes, click **View** or run:  
+     ```bash
+     heroku open
+     ```  
+   - To interact with the CLI in your local terminal via Heroku, run:  
+     ```bash
+     heroku run python run.py
+     ```
+
+Your Battleships game is now live and playable through a browser‑embedded terminal or directly via the Heroku CLI!  
+
+---
+
+## Credits
+
+### Content  
+- Core game mechanics and flow inspired by the “Morpion” (Tic‑Tac‑Toe) tutorial on [Pirple.com](https://www.pirple.com).  
+- Ship placement, turn logic and win/draw conditions adapted and extended for the 5×5 Battleships format.
+
+### Media  
+- ASCII art banner created and modified with [ASCII Generator](https://ascii-generator.site/).  
+- Game board mockups and flowcharts hand‑drawn and exported as PNG for the `assets/` folder.
+
+### Code   
+- Color handling via the `colorama` documentation and examples.
+
+### Acknowledgements  
+- **My partner**, for unwavering support and encouragement throughout this project.  
+- **My tutor, Marcel**, for constructive feedback and guidance.  
+- **Pirple.com**, for the initial “Morpion” tutorial that sparked this Battleships implementation.  
+- **Code Institute** and its Slack community, for providing the resources and peer help needed to complete this project.  

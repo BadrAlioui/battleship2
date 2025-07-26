@@ -161,7 +161,8 @@ def run_game():
 def main():
     while True:
         run_game()
-        replay = input(Fore.CYAN + 'Play again? (Y/N): ').strip().lower()
+        print(Fore.CYAN + 'Play again? (Y/N): ')
+        replay = input().strip().lower()
         if replay != 'y':
             print(Fore.MAGENTA + 'Thanks for playing Ultimate BATTLESHIPS!')
             break
