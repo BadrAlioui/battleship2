@@ -53,7 +53,6 @@ Ultimate Battleships brings the naval combat experience to your terminal. It com
 **As a user, I want to easily understand what input is needed on each step.**
 
 * Prompts like `Enter your name:`, `Guess a row (0-4):`, and `Guess a column (0-4):` guide the player.
-* Prompt text appears in green to stand out.
 
 **As a user, I want to receive clear feedback in case I provide the wrong input.**
 
