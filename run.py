@@ -13,6 +13,8 @@ BANNER = """
  #####  #    #   #     #   ###### ######  ####  #    # # #       ####
 """
 
+TOTAL_TURNS = 5
+
 
 def draw_field(field):
     """
@@ -53,7 +55,7 @@ def place_ships(board, symbol):
 def get_valid_name():
     while True:
         print('Enter your name: ')
-        name = input()        
+        name = input()
         if name.isalpha():
             return name
         print('Name must contain only letters. Please try again.')
@@ -112,7 +114,15 @@ def run_game():
     computer_guesses = set()
     turns = 0
 
-    while turns < 5 and player_score < 4 and computer_score < 4:
+    while turns < TOTAL_TURNS and player_score < 4 and computer_score < 4:
+        remaining = TOTAL_TURNS - turns
+        print(
+            Fore.CYAN
+            + f"Turn {turns + 1}/{TOTAL_TURNS} — {remaining} "
+            + ("turns" if remaining > 1 else "turn")
+            + " left"
+        )
+
         row, col = get_valid_guess(player_guesses)
         player_guesses.add((row, col))
         turns += 1
@@ -156,7 +166,7 @@ def run_game():
         print(Fore.RED + f"Sorry {name}, you lost.")
     else:
         print(Fore.YELLOW + "It's a draw!")
-    
+
     # show computer’s ships
     print("\nComputer’s ships were at:")
     draw_field(computer_board)
